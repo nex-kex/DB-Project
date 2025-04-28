@@ -1,16 +1,22 @@
 from src.config import config
-from src.hh import HH
-from src.utils import create_database, save_data_to_database
+from src.HH_class import HH
+from src.DB_class import DBManager
 
 
 def main():
     hh_database = HH()
-    db_name = "HeadHunterDB"
     params = config()
-    create_database(db_name, params)
+    head_hunter_db = DBManager("headhunterdb", params)
+    head_hunter_db.create_database()
 
     db_data = hh_database.get_top_employers_vacancies()
-    save_data_to_database(db_data, db_name, params)
+    head_hunter_db.save_data_to_database(db_data)
+
+    # print(head_hunter_db.get_companies_and_vacancies_count())
+    # print(head_hunter_db.get_all_vacancies())
+    # print(head_hunter_db.get_avg_salary())
+    # print(head_hunter_db.get_vacancies_with_higher_salary())
+    # print(head_hunter_db.get_vacancies_with_keyword(["Менеджер", "Аналитик"]))
 
 if __name__ == "__main__":
     main()

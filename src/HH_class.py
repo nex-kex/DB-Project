@@ -27,7 +27,7 @@ class HH:
 
             for employer in data:
                 vacancies_data = requests.get(
-                    params={"per_page": 100, "vacancy_search_order": "salary_desc"},
+                    params={"per_page": 100, "vacancy_search_order": "salary_desc", "only_with_salary": True},
                     url=f"https://api.hh.ru/vacancies?employer_id={employer["id"]}").json()["items"]
                 vacancies_list = []
                 for vacancy in vacancies_data:
