@@ -21,7 +21,7 @@ def create_database(database_name: str, params: dict):
                 employer_id INT PRIMARY KEY,
                 name VARCHAR NOT NULL,
                 url VARCHAR NOT NULL,
-                open_vacancies VARCHAR NOT NULL
+                open_vacancies INT NOT NULL
             )
         """)
 
@@ -31,7 +31,6 @@ def create_database(database_name: str, params: dict):
                 vacancy_id INT PRIMARY KEY,
                 employer_id INT REFERENCES employers(employer_id),
                 name VARCHAR NOT NULL,
-                description VARCHAR,
                 salary_from INT,
                 salary_to INT
             )
@@ -60,10 +59,10 @@ def save_data_to_database(data: list[dict], database_name: str, params: dict):
             for vacancy in employer['vacancies']:
                 cur.execute(
                     """
-                    INSERT INTO vacancies (vacancy_id, employer_id, name, description, salary_from, salary_to)
+                    INSERT INTO vacancies (vacancy_id, employer_id, name, salary_from, salary_to)
                     VALUES (%s, %s, %s, %s, %s)
                     """,
-                    (vacancy["vacancy_id"], vacancy["employer_id"], vacancy["name"], vacancy["description"],
+                    (vacancy["vacancy_id"], vacancy["employer_id"], vacancy["name"],
                      vacancy["salary_from"], vacancy["salary_to"])
                 )
 
